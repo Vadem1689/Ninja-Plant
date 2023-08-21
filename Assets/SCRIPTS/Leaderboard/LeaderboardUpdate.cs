@@ -8,6 +8,7 @@ public class LeaderboardUpdate : MonoBehaviour
 {
     [SerializeField] private Wallet _wallet;
 
+    private bool _isStopSetPlayerScore=false;
     private string _leaderboardName = "TopFarmer";
 
     private void Start()
@@ -17,7 +18,7 @@ public class LeaderboardUpdate : MonoBehaviour
 
     private IEnumerator WaitAndPrintMessage()
     {
-        while (true)
+        while (!_isStopSetPlayerScore)
         {
 #if UNITY_WEBGL && !UNITY_EDITOR
              SetPlayerScore();

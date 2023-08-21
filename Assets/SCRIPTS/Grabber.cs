@@ -7,51 +7,64 @@ public class Grabber : MonoBehaviour
     [SerializeField] private SpawnPlant _spawnPlant;
     [SerializeField] private Merger _merger;
 
-    private Plant _selectedObject;
+    private bool _isUsingComputer=false;
+
+    private SpawnPoint _selectedSpawnPoint;
     private BoxCollider _collider;
     private Vector3 _newPosition;
     private RaycastHit _hit;
     private int _countMerge = 0;
     private bool _isTaken=false;
+    private Plant _plant;
+    
 
     public int CountMerge => _countMerge;
     public bool IsTaken => _isTaken;    
     public static Action OnÑallAd;       //Ïîìåíÿòü íàçâàíèå
 
+    private void Start()
+    {
+        IdentifyDevicecomputer();
+    }
 
     private void Update()
     {
+        MakeGrabber();
+    }
+
+    private void IdentifyDevicecomputer()
+    {
+        if (true)
+        {
+            _isUsingComputer=true;
+        }
+        else
+        {
+            _isUsingComputer=false; 
+        }
+    }
+
+    private void MakeGrabber()
+    {
         if (Input.GetMouseButtonDown(0))
         {
-            if (_selectedObject == null)
+            if (_selectedSpawnPoint == null)
             {
-                if (Input.mousePosition != null)
-                {
-                    _hit = CastRayForComputers();
-                }
-                else if (Input.GetTouch(0).tapCount > 0)
-                {
-                    _hit = CastRayForPhones();
-                }
+                _hit = CastRay();
 
-                if (_hit.collider != null)
+                if (_hit.collider != null && _hit.collider.TryGetComponent(out SpawnPoint spawnPoint))
                 {
-
-                    if (_hit.collider.TryGetComponent(out Plant plant))
-                    {
-
-                        _selectedObject = plant;
-                        _collider = plant.gameObject.GetComponent<BoxCollider>();
-                        return;
-                    }
+                    _selectedSpawnPoint = spawnPoint;
+                    _collider = _selectedSpawnPoint.Plant.gameObject.GetComponent<BoxCollider>();
+                    return;
                 }
             }
             else
             {
-                _merger.TryMerge(_selectedObject, _collider);
+                _merger.TryMerge(_selectedSpawnPoint.Plant, _collider);
             }
         }
-        if (_selectedObject != null)
+        if (_selectedSpawnPoint != null)
         {
             if (Input.mousePosition != null)
             {
@@ -64,29 +77,32 @@ public class Grabber : MonoBehaviour
 
                 if (touch.phase == TouchPhase.Ended)
                 {
-                    _merger.TryMerge(_selectedObject, _collider);
-                    PutPlant(_selectedObject.SpawnPoint);
+                    _merger.TryMerge(_selectedSpawnPoint.Plant, _collider);
+                    PutPlant(_selectedSpawnPoint);
                 }
             }
         }
     }
 
+
     private void MovingSelectedObject()
     {
-        _selectedObject.StopSpawn();
+        _selectedSpawnPoint.Plant.StopSpawn();
 
-        _selectedObject.SpawnPoint.DeletePlant();
-        _collider.enabled = false;
         Vector3 position = new Vector3(Input.mousePosition.x, Input.mousePosition.y,
-            Camera.main.WorldToScreenPoint(_selectedObject.transform.position).z);
-
+            Camera.main.WorldToScreenPoint(_selectedSpawnPoint.Plant.transform.position).z);
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(position);
-        _selectedObject.transform.position = new Vector3(worldPosition.x, 3.5f, worldPosition.z);
-        _selectedObject.TakePlant();
+        _selectedSpawnPoint.Plant.transform.position = new Vector3(worldPosition.x, 3.5f, worldPosition.z);
+        //_selectedObject.TakePlant();
+
+        _plant = _selectedSpawnPoint.Plant;
+        _selectedSpawnPoint.DeletePlant();
+        _collider.enabled = false;
+
         _isTaken =true;
     }
 
-    private RaycastHit CastRayForComputers()
+    private RaycastHit CastRay()
     {
         Vector3 screenMousePosFar = new Vector3(
             Input.mousePosition.x,
@@ -104,38 +120,18 @@ public class Grabber : MonoBehaviour
 
         return hit;
     }
-    private RaycastHit CastRayForPhones()
-    {
-        Vector3 screenMousePosFar = new Vector3(
-            Input.GetTouch(0).position.x,
-            Input.GetTouch(0).position.y,
-            Camera.main.farClipPlane);
-        Vector3 screenMousePosNer = new Vector3(
-            Input.GetTouch(0).position.x,
-            Input.GetTouch(0).position.y,
-            Camera.main.nearClipPlane);
-        Vector3 worldMousePosFar = Camera.main.ScreenToWorldPoint(screenMousePosFar);
-        Vector3 worldMousePosNear = Camera.main.ScreenToWorldPoint(screenMousePosNer);
-        RaycastHit hit;
-        Physics.Raycast(worldMousePosNear, worldMousePosFar - worldMousePosNear, out hit);
-        Debug.DrawRay(worldMousePosNear, (worldMousePosFar - worldMousePosNear) * 100, Color.red);
-
-        return hit;
-    }
+   
 
     public void PutPlant(SpawnPoint spawnPoint)
     {
-        _selectedObject.StartSpawn();
+        spawnPoint.SetPlant(_plant);
+        spawnPoint.Plant.StartSpawn();
 
-        _selectedObject.GetSpawnPoint(spawnPoint);
+        spawnPoint.Plant.transform.position = spawnPoint.transform.position;
 
-        _newPosition = spawnPoint.transform.position;
-        _selectedObject.transform.position = _newPosition;
-
-        spawnPoint.GetPlant(_selectedObject);
-        _selectedObject.Release();
+        //_selectedObject.Release();
         _collider.enabled = true;
-        _selectedObject = null;
+        _selectedSpawnPoint = null;
         _isTaken = false;
     }
 }

@@ -1652,6 +1652,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnPlant: {fileID: 1835718236}
   _grabber: {fileID: 133497680}
+  _basket: {fileID: 2041820848}
 --- !u!1 &137605749
 GameObject:
   m_ObjectHideFlags: 0
@@ -8708,6 +8709,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bladeTrail: {fileID: 6512725131251096967, guid: a804a87aae6517144831b7e9eae69ae4, type: 3}
   _grabber: {fileID: 133497680}
+  _basket: {fileID: 2041820848}
 --- !u!4 &833607700
 Transform:
   m_ObjectHideFlags: 0
@@ -17109,7 +17111,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 9e2d63afa391a89448948e3a746c3d87, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -20933,7 +20935,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1915038178
 RectTransform:
   m_ObjectHideFlags: 0
@@ -25293,7 +25295,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4148507561859750620
 Transform:
   m_ObjectHideFlags: 0

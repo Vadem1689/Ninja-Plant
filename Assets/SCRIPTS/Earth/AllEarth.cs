@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EarthController : MonoBehaviour
+public class AllEarth : MonoBehaviour
 {
     [SerializeField] private SaverPlayerData _playerData;
     [SerializeField] private List<Earth> earths = new List<Earth>();

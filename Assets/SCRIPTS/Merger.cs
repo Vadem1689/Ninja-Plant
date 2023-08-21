@@ -7,6 +7,7 @@ public class Merger : MonoBehaviour
 {
     [SerializeField] private SpawnPlant _spawnPlant;
     [SerializeField] private Grabber _grabber;
+    [SerializeField] private Basket _basket;
 
     private int _countMerge = 0;
     private Vector3 _newPosition;
@@ -48,8 +49,8 @@ public class Merger : MonoBehaviour
             selectedObject = null;
 
             plant.ImprovePlantModel();
-            plant.ModificationFruit();
-            plant.SpawnPoint.GetPlant(plant);
+            plant.ModificationFruit(_basket);
+            //plant.SpawnPoint.SetPlant(plant);
         }
     }
 

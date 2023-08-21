@@ -15,6 +15,8 @@ public class AllSpawnPoint : MonoBehaviour
     private string _loaderNumberModelPlant;
     private int _emptyModelPlant = 2;
 
+    public List<SpawnPoint> SpawnPoints=> _spawnPoints;
+
     private void Start()
     {
         LoadPlant();
@@ -76,7 +78,7 @@ public class AllSpawnPoint : MonoBehaviour
                     
 
                     Plant plant= _spawnPlant.LoadSpawn(_spawnPoints[i], newStatusSpawnPoint, newNumberModelPlant);
-                    _spawnPoints[i].GetPlant(plant);
+                    _spawnPoints[i].SetPlant(plant);
                 }
             }
         }

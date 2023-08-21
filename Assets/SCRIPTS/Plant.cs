@@ -3,113 +3,114 @@ using UnityEngine;
 
 public class Plant : MonoBehaviour
 {
-    [SerializeField] private Fruit _currentFruit;
-    [SerializeField] private FruitObject _treeClass;
-    [SerializeField] private List<FruitObject> _fruitObject;
-    [SerializeField] private SpawnPoint _spawnPoint;
+    [SerializeField] private SpawnFruits _spawnFruits;
+    [SerializeField] private Fruit _currentFruitPlant;
+    //[SerializeField] private FruitObject _treeClass;
+    [SerializeField] private List<Fruit> _fruitObject;
     [SerializeField] private GameObject _spawnPointFruit;
     [SerializeField] private float _spawnTime;
     [SerializeField] private int _currentIndexFruit;
-
-    [SerializeField] private List<GameObject> _prefabPlant;
     [SerializeField] private int _currentIndexPlant;
     [SerializeField] private ParticleSystem _plantEffect;
     [SerializeField] private Grabber _grabber;
+    [SerializeField] private List<GameObject> _prefabPlant;
 
+    private FruitMovement _fruitMovement;
+    private Fruit _newFruit;
     private Basket _basket;
     private float _spawnTimeWas;
-    private bool _isGrabbing = false;
+    private bool _isSpawn = true;
     private int _emptyModel = 2;
 
-    public Grabber Grabber=> _grabber;
-    public Basket Basket=>_basket;
-    public FruitObject TreeClass => _treeClass;
-    public Fruit CurrentFruit => _currentFruit;
     public float SpawnTime => _spawnTime;
-    public SpawnPoint SpawnPoint => _spawnPoint;
     public int CurrentIndexFruit => _currentIndexFruit;
     public int CurrentIndexPlant => _currentIndexPlant;
 
+    // Нигде нет реализации улучшения фрукта
 
     private void Start()
     {
         _spawnTimeWas = _spawnTime;
+        _spawnFruits=gameObject.GetComponentInChildren<SpawnFruits>();
+
     }
+
     private void Update()
     {
-        if (_currentFruit == null && _isGrabbing==false)
+        if(_spawnTimeWas <= 0  && _isSpawn == true && _newFruit==null)
         {
-            _spawnTimeWas += Time.deltaTime;
+            _newFruit= _spawnFruits.SpawnFruit(_currentFruitPlant);
+            
+            _fruitMovement= _newFruit.GetComponent<FruitMovement>();
+           
+            _spawnTimeWas = _spawnTime;
+        }
+        else
+        {
+            _spawnTimeWas -= Time.deltaTime;    
+        }
 
-            if ( _spawnTimeWas > _spawnTime)
-            {
-                _spawnTimeWas = 0;
-
-                _currentFruit = Instantiate(_fruitObject[_currentIndexFruit].FruitPrefab,
-                    _spawnPointFruit.transform.position, _fruitObject[_currentIndexFruit].FruitPrefab.transform.rotation)
-                    .GetComponent<Fruit>();
-
-
-                _currentFruit.Init(_basket);
-                CurrentFruit.transform.SetParent(transform, true);
-                CurrentFruit.GetComponent<FruitMovement>().SetParentPlant(this);
-            }
+        if (_fruitMovement.IsCut==true)
+        {
+  
+            _newFruit = null;
         }
     }
     public void StopSpawn()
     {
-        _isGrabbing=true;
+        _isSpawn = false;
     }
     public void StartSpawn()
     {
-        _isGrabbing = false;
+        _isSpawn = true;
     }
 
-    public void Init(Basket basket)
+    public void CutFruit(Basket basket)
     {
-        _basket = basket;
+        _fruitMovement.SetTargetMovement(basket);
+        _fruitMovement.Jump();
     }
-
-    public void DeleteFruit()
-    {
-        _currentFruit = null;
-    }
-
-    public void ChangeCurrentFruit(int currentFruit)
-    {
-        _currentIndexFruit = currentFruit;
-    }
-
-    private void Modification()
-    {
-        _treeClass = _fruitObject[_currentIndexFruit];
-    }
-
-    public void GetSpawnPoint(SpawnPoint spawnPoint)
-    {
-        _spawnPoint = spawnPoint;
-    }
-
-    public void ModificationFruit()
+    public void ModificationFruit(Basket basket)
     {
         if (_currentIndexFruit < _fruitObject.Count)
         {
             _currentIndexFruit++;
             Modification();
 
-            if (_currentFruit != null)
+            if (_currentFruitPlant.TryGetComponent(out FruitMovement _fruit))
             {
-                if (_currentFruit.TryGetComponent(out FruitMovement _fruit) && _currentFruit != null)
-                {
-                    _fruit.Jump();
-                }
+                CutFruit(basket);
             }
         }
     }
 
+    private void Modification()
+    {
+        _currentFruitPlant = _fruitObject[_currentIndexFruit];
+    }
+
+    public void ChangeCurrentFruit(int currentFruit)
+    {
+        _currentIndexFruit = currentFruit;
+        Modification();                                        // Надо ли здесь 
+    }
+
+    public void UpSpeed(float newTime)
+    {
+        if (_spawnTime <= newTime)
+        {
+            newTime = 0;
+        }
+        _spawnTime -= newTime;
+    }
+    //public void DeleteFruit()
+    //{
+    //    _currentFruitPlant = null;
+    //}
+
     public void ImprovePlantModel()
     {
-        if (_currentIndexPlant < _prefabPlant.Count-1)
+        if (_currentIndexPlant < _prefabPlant.Count - 1)
         {
             _currentIndexPlant++;
         }
@@ -136,7 +137,6 @@ public class Plant : MonoBehaviour
         {
             if (modelPlant< _emptyModel)
             {
-                
                 if (plantPrefab == _prefabPlant[modelPlant])
                 {
                     plantPrefab.SetActive(true);
@@ -146,28 +146,8 @@ public class Plant : MonoBehaviour
                     plantPrefab.SetActive(false);
                 }
             }
-            
         }
     }   
-
-    public void UpSpeed(float newTime)
-    {
-        if (_spawnTime <= newTime)
-        {
-            newTime = 0;
-        }
-        _spawnTime -= newTime;
-    }
-
-    public void TakePlant()
-    {
-        _isGrabbing=true;
-    }
-
-    public void Release()
-    {
-        _isGrabbing = false;
-    }
 
     public void PlayEffect()
     {

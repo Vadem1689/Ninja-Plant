@@ -6,7 +6,7 @@ public class LoaderPlayerData : MonoBehaviour
     [SerializeField] private SpawnPlant _spawnPlant;
     [SerializeField] private SpeedUpGrowthButton _speedUpGrowthButton;
     [SerializeField] private UpgradeSystem _obgadeSystem;
-    [SerializeField] private EarthController _earthController;
+    [SerializeField] private AllEarth _earthController;
 
     private int _coinCount;
     private int _newPricePlant;

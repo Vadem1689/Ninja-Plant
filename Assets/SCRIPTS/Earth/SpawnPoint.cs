@@ -14,21 +14,21 @@ public class SpawnPoint : MonoBehaviour
     public  Action OnChangeStatus;
     public Plant Plant=> _plant;
 
-    public void GetPlant(Plant plant)
+    public void SetPlant(Plant plant)
     {
         _plant = plant;
         IdentifyStatus(_plant);
-        GetStatus();
+        SetStatus();
     }
 
     public void DeletePlant()
     {
         _plant = null;
-        GetStatus();
+        SetStatus();
         _statusPoint =(int) ZoneStatus.None;
     }
 
-    private void GetStatus()
+    private void SetStatus()
     {
         if (_plant != null)
         {

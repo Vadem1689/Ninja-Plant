@@ -57,26 +57,24 @@ public class SpawnPlant : MonoBehaviour
     }
     public void Spawn()
     {
-        foreach (SpawnPoint spawnPoint in _spawnPoints)
+        SpawnPoint spawnPoint = FindFreeSpawnPoint();
+
+        if (_wallet.Coins >= _pricePlant)
         {
-            if (spawnPoint.IsBusy==false && _wallet.Coins >= _pricePlant)
-            {
-                _wallet.GiveAway(_pricePlant);
-                IncreasePrice();
-                OnBuyPlant?.Invoke(_pricePlant);
+            _wallet.GiveAway(_pricePlant);
+            IncreasePrice();
+            OnBuyPlant?.Invoke(_pricePlant);
 
-                Plant plant = Instantiate(_plant, FindFreeSpawnPoint().transform.position, _plant.transform.rotation);
+            Plant plant = Instantiate(_plant, spawnPoint.transform.position, _plant.transform.rotation);
 
-                plant.Init(_basket);
-                _plants.Add(plant);
+            spawnPoint.SetPlant(plant);
+            _plants.Add(plant);
 
-                plant.GetSpawnPoint(FindFreeSpawnPoint());
-                FindFreeSpawnPoint().GetPlant(_plants[_plants.Count - 1]);
-                plant.UpSpeed(plant.SpawnTime - _speedUpGrowth.SpawnTime);
-                currentSpawnPoint++;
-                break;
-            }
-        }    
+            //FindFreeSpawnPoint().SetPlant(_plants[_plants.Count - 1]);
+            plant.UpSpeed(plant.SpawnTime - _speedUpGrowth.SpawnTime);
+            currentSpawnPoint++;
+        }
+
     }
     public void GetPricePlant(int price)
     {
@@ -89,12 +87,9 @@ public class SpawnPlant : MonoBehaviour
        Plant plant= Instantiate(_plant, _spawnPoints[currentSpawnPoint].transform.position,
            _plant.transform.rotation);
 
-        plant.Init(_basket);
         _plants.Add(plant);
 
-        _plants[_plants.Count - 1].GetSpawnPoint(_spawnPoints[currentSpawnPoint]);
-
-        _spawnPoints[currentSpawnPoint].GetPlant(_plants[_plants.Count-1]);
+        _spawnPoints[currentSpawnPoint].SetPlant(plant);
     }
 
     public void DecreaseSpawnPoint()
@@ -110,7 +105,7 @@ public class SpawnPlant : MonoBehaviour
         {
             if (_spawnPoints[i].IsBusy == false)
             {
-                spawnPoint= _spawnPoints[i];
+                spawnPoint = _spawnPoints[i];
                 break;
             }
         }
@@ -134,10 +129,8 @@ public class SpawnPlant : MonoBehaviour
 
         plant.ChangeCurrentFruit(statusSpawnPoint);
 
-        plant.Init(_basket);
         _plants.Add(plant);
 
-        plant.GetSpawnPoint(spawnPoint);
         plant.UpSpeed(plant.SpawnTime - _speedUpGrowth.SpawnTime);
 
         return plant;

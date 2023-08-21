@@ -7,12 +7,12 @@ public class UICoins : MonoBehaviour
 
     private void OnEnable()
     {
-        Coin.OnChangeNumberCoins += ShowCountCoins;
+        Wallet.OnChangeNumberCoins += ShowCountCoins;
     }
 
     private void OnDisable()
     {
-        Coin.OnChangeNumberCoins -= ShowCountCoins;
+        Wallet.OnChangeNumberCoins -= ShowCountCoins;
     }
 
     private void ShowCountCoins(int coinCount)

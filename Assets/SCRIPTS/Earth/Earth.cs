@@ -5,7 +5,7 @@ using UnityEngine;
 public class Earth : MonoBehaviour
 {
     [SerializeField] private Coin _coins;
-    [SerializeField] private EarthController _earthController;
+    [SerializeField] private AllEarth _earthController;
     [SerializeField] private Wallet _wallet;
     [SerializeField] private int _price;
 

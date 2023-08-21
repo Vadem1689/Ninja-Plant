@@ -5,6 +5,7 @@ public class Blade : MonoBehaviour
     [SerializeField] TrailRenderer _bladeTrail;
     private Vector3 mousePosition;
     [SerializeField] private Grabber _grabber;
+    [SerializeField] private Basket _basket;
 
     private void Update()
     {
@@ -32,10 +33,9 @@ public class Blade : MonoBehaviour
 
         if (Physics.Raycast(ray, out raycastHit, Mathf.Infinity))
         {
-            if (raycastHit.collider.TryGetComponent(out FruitMovement fruit) && _grabber.IsTaken==false)
+            if (raycastHit.collider.TryGetComponent(out Plant plant) && _grabber.IsTaken==false)
             {
-                fruit.Jump();
-                fruit.gameObject.GetComponent<BoxCollider>().enabled=false;
+                plant.CutFruit(_basket);
             }
         }
     }

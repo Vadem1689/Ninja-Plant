@@ -128,9 +128,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68c6471b10baafa43b42d4ce5ca8454b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _target: {fileID: 0}
   _radiusTarget: 2
-  _basket: {fileID: 0}
+  _rb: {fileID: 1696875776873655115}
+  _fruit: {fileID: 5237425312590606051}
 --- !u!65 &3341614373318496911
 BoxCollider:
   m_ObjectHideFlags: 0

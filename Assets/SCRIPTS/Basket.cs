@@ -26,9 +26,9 @@ public class Basket : MonoBehaviour
     {
         _fruits.Add(newFruit);
 
-        RemovingExcessFruit();
+        TryRemovingExcessFruit();
     }
-    private void RemovingExcessFruit()
+    private void TryRemovingExcessFruit()
     {
         if (IsFullness() && _isDelete)
         {
@@ -44,27 +44,17 @@ public class Basket : MonoBehaviour
         yield return waitForSeconds;
 
         DeleteFruits();
-        RemovingExcessFruit();
+        TryRemovingExcessFruit();
     }
 
-    private bool IsFullness()
-    {
-        if (_fruits.Count >= _basketSize)
-        {
-            return true;
-        }
-        return false;
-    }
+    private bool IsFullness() => _fruits.Count >= _basketSize;
 
     private void DeleteFruits()
     {
-        Fruit fruit;
-
         for (int i = 0; i < _numberFruitsRemove; i++)
         {
-            fruit = _fruits[i];
+            Destroy(_fruits[i].gameObject);
             _fruits.Remove(_fruits[i]);
-            Destroy(fruit.gameObject);
         }
 
         UpdateListFruits();
