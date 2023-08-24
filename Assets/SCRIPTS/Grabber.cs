@@ -21,25 +21,19 @@ public class Grabber : MonoBehaviour
 
     private void Update()
     {
+        MakeGrabber();
+    }
+
+    private void MakeGrabber()
+    {
         if (Input.GetMouseButtonDown(0))
         {
             if (_selectedObject == null)
             {
-                if (Input.mousePosition != null)
+                if (GetHit())
                 {
-                    _hit = CastRayForComputers();
-                }
-                else if (Input.GetTouch(0).tapCount > 0)
-                {
-                    _hit = CastRayForPhones();
-                }
-
-                if (_hit.collider != null)
-                {
-
                     if (_hit.collider.TryGetComponent(out Plant plant))
                     {
-
                         _selectedObject = plant;
                         _collider = plant.gameObject.GetComponent<BoxCollider>();
                         return;
@@ -69,6 +63,31 @@ public class Grabber : MonoBehaviour
                 }
             }
         }
+    }
+
+    private bool GetHit()
+    {
+        if (Input.mousePosition != null)
+        {
+            _hit = CastRayForComputers();
+        }
+        else if (Input.GetTouch(0).tapCount > 0)
+        {
+            _hit = CastRayForPhones();
+        }
+
+        if (_hit.collider!=null)
+        {
+            return true;
+        }
+        return false;
+
+    }
+
+    public void PutPlantStatus()
+    {
+        print("ÎÍî");
+        _isTaken=false;
     }
 
     private void MovingSelectedObject()

@@ -51,6 +51,7 @@ public class Merger : MonoBehaviour
             plant.ModificationFruit();
             plant.SpawnPoint.GetPlant(plant);
         }
+        _grabber.PutPlantStatus();
     }
 
     private void FindRequiredNumberMerges() 

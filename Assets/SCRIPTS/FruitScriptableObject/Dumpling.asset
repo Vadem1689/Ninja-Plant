@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Dumpling
   _price: 8
-  _fruitPrefab: {fileID: 8304794630724852455, guid: 0e4a9c0376eb9bd47be10b5f442bea95, type: 3}
+  _fruitPrefab: {fileID: 2701159027174540351, guid: 0e4a9c0376eb9bd47be10b5f442bea95, type: 3}
+  _number: 0

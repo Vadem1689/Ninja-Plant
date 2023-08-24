@@ -32,7 +32,8 @@ public class Blade : MonoBehaviour
 
         if (Physics.Raycast(ray, out raycastHit, Mathf.Infinity))
         {
-            if (raycastHit.collider.TryGetComponent(out FruitMovement fruit) && _grabber.IsTaken==false)
+            print(_grabber.IsTaken);
+            if (raycastHit.collider.TryGetComponent(out FruitMovement fruit) && _grabber.IsTaken == false)
             {
                 fruit.Jump();
                 fruit.gameObject.GetComponent<BoxCollider>().enabled=false;

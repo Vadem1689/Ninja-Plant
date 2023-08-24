@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6427953838863638402}
   - component: {fileID: 4533281451293693294}
   - component: {fileID: 6313218719066010823}
+  - component: {fileID: 5334881018130572701}
   m_Layer: 0
   m_Name: Plant
   m_TagString: Untagged
@@ -50,18 +51,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e821116c965128b43ada9350a7a65e78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentFruit: {fileID: 0}
-  _treeClass: {fileID: 0}
+  _spawnerFruit: {fileID: 5334881018130572701}
+  _treeClass: {fileID: 11400000, guid: 2c95f70ad0ae5894694ee3d3f73e66aa, type: 2}
   _fruitObject:
   - {fileID: 11400000, guid: 2c95f70ad0ae5894694ee3d3f73e66aa, type: 2}
-  - {fileID: 11400000, guid: 1d8cc421dffcf3b4ca714ccee93b491e, type: 2}
   - {fileID: 11400000, guid: 5f173db278e009d47ad271d2990be24f, type: 2}
+  - {fileID: 11400000, guid: 1d8cc421dffcf3b4ca714ccee93b491e, type: 2}
   - {fileID: 11400000, guid: c67ca55c44d62554bbee4ae8f354a64c, type: 2}
   - {fileID: 11400000, guid: 5d9f9397f48106a4ba8e4b073ed0fdcb, type: 2}
   - {fileID: 11400000, guid: 22dbd31acacbfab41b922b1c3218e315, type: 2}
   - {fileID: 11400000, guid: 429e21448e18eb044ab13339b0e2bdbe, type: 2}
   _spawnPoint: {fileID: 0}
-  _spawnPointFruit: {fileID: 5424940420569456771}
+  _spawnPointFruit: {fileID: 8000767189285271265}
   _spawnTime: 3
   _currentIndexFruit: 0
   _prefabPlant:
@@ -69,6 +70,7 @@ MonoBehaviour:
   - {fileID: 7754521583045456369}
   _currentIndexPlant: 0
   _plantEffect: {fileID: 8511334878865196687}
+  _grabber: {fileID: 0}
 --- !u!54 &4533281451293693294
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -98,6 +100,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.0067836368, y: 0.018214278, z: 0.013073512}
   m_Center: {x: -0.002537798, y: 0.006222477, z: 0.0070029018}
+--- !u!114 &5334881018130572701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4594101697149397368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0543fbdee35eaa4585a13481b120ae0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5424940420569456771
 GameObject:
   m_ObjectHideFlags: 0

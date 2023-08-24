@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Banana
   _price: 4
-  _fruitPrefab: {fileID: 8953436223476591320, guid: b883247207e8d80429c1bb61b3844513, type: 3}
+  _fruitPrefab: {fileID: 5237425312590606051, guid: b883247207e8d80429c1bb61b3844513, type: 3}
+  _number: 0

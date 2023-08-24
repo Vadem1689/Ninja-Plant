@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Apple
   _price: 1
-  _fruitPrefab: {fileID: 411348951241994215, guid: 399af2b6c241fcc4da24115e5d8cccab, type: 3}
+  _fruitPrefab: {fileID: 7702600016079958605, guid: 399af2b6c241fcc4da24115e5d8cccab, type: 3}
+  _number: 0
