@@ -7,6 +7,8 @@ public class Blade : MonoBehaviour
     [SerializeField] private Grabber _grabber;
     [SerializeField] private Basket _basket;
 
+    Plant _plant;
+
     private void Update()
     {
         if (Input.GetMouseButton(0))
@@ -17,24 +19,24 @@ public class Blade : MonoBehaviour
 
     private void UpdateCut()
     {
-        if (Input.mousePosition!=null)
+        if (Input.mousePosition != null)
         {
-             mousePosition = Input.mousePosition;
+            mousePosition = Input.mousePosition;
         }
         else if (Input.touchCount > 0)
         {
-             mousePosition=Input.GetTouch(0).position;
+            mousePosition = Input.GetTouch(0).position;
         }
 
-          transform.position=mousePosition;
-
+        transform.position = mousePosition;
         Ray ray = Camera.main.ScreenPointToRay(mousePosition);
         RaycastHit raycastHit;
 
         if (Physics.Raycast(ray, out raycastHit, Mathf.Infinity))
         {
-            if (raycastHit.collider.TryGetComponent(out Plant plant) && _grabber.IsTaken==false)
+            if (raycastHit.collider.TryGetComponent(out Plant plant))
             {
+                print("задел фрукт");
                 plant.CutFruit(_basket);
             }
         }

@@ -12,7 +12,7 @@ public class Wallet : MonoBehaviour
     private string _score = "Score";
 
     private int _currentMultiplie = 1;
-    private int _сounterReceivingMoney;
+    private int _ounterReceivingMoney;
     private int _rightAmountAd = 10;
 
 
@@ -34,16 +34,16 @@ public class Wallet : MonoBehaviour
 
     public void IncreaseMoneyCuttingFruit(Fruit fruit)
     {
-        _сounterReceivingMoney++;
+        _ounterReceivingMoney++;
         int _valueIncrease = fruit.Price * _currentMultiplie;
 
         _coin.IncreaseValue(_valueIncrease);
         OnChangeNumberCoins?.Invoke(_coin.Coins);
 
-        LearnAboutShowTutorialEarth();     // Надо ли их здесь оставлять?
+        LearnAboutShowTutorialEarth();     // пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ?
     }
 
-    private void LearnAboutShowTutorialEarth()     //Название
+    private void LearnAboutShowTutorialEarth()     //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     {
         if (_earth.Price == _coin.Coins)
         {
@@ -51,7 +51,7 @@ public class Wallet : MonoBehaviour
         }
     }
 
-    public bool GiveAway(int price)        // Нужен ли этот метод
+    public bool GiveAway(int price)        // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
     {
         if (_coin.DecreaseValue(price))
         {
@@ -60,7 +60,7 @@ public class Wallet : MonoBehaviour
         return false;
     }
 
-    public bool TryPriceIncrease(int value, int cost)   //Нужен ли bool
+    public bool TryPriceIncrease(int value, int cost)   //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ bool
     {
         if (_coin.DecreaseValue(cost))
         {
@@ -72,7 +72,7 @@ public class Wallet : MonoBehaviour
     }
     public void PriceIncrease(int value)
     {
-        _currentMultiplie = value;   // проверить название
+        _currentMultiplie = value;   // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     }
 
     public void GiveAdReward()

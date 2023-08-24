@@ -17,12 +17,12 @@ public class AdButton : MonoBehaviour
 
     private void OnEnable()
     {
-        Grabber.OnСallAd += PlayAd;
+        Grabber.OnallAd += PlayAd;
     }
 
     private void OnDisable()
     {
-        Grabber.OnСallAd -= PlayAd;
+        Grabber.OnallAd -= PlayAd;
     }
 
     public void OnShowVideoButtonClick()
@@ -62,7 +62,7 @@ public class AdButton : MonoBehaviour
         }
     }
 
-    private void PlayAd()   //Название
+    private void PlayAd()   //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     {
         ShowInterstitialAd();
     }

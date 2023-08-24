@@ -36,15 +36,21 @@ public class FruitMovement : MonoBehaviour
 
     public void Jump()
     {
-        print("Выполни");
-        _rb.DOJump(_basket.transform.position + new Vector3(Random.Range(-_radiusTarget, _radiusTarget), 0f,
-               Random.Range(-_radiusTarget, _radiusTarget)),
-                _jumpForce, _numJumps, _duration, false).OnComplete(() => { _collider.enabled = true; _rb.useGravity = true; });
-        print(_rb.isKinematic);
-        _rb.isKinematic = false;
-        gameObject.transform.parent = null;
+        if (!_isCut)
+        {
+            _rb.DOJump(_basket.transform.position + new Vector3(Random.Range(-_radiusTarget, _radiusTarget), 0f,
+                    Random.Range(-_radiusTarget, _radiusTarget)),
+                _jumpForce, _numJumps, _duration, false).OnComplete(() =>
+            {
+                _collider.enabled = true;
+                _rb.useGravity = true;
+            });
+            print(_rb.isKinematic);
+            _rb.isKinematic = false;
+            gameObject.transform.parent = null;
 
-        OnCut?.Invoke(_fruit);
-        _isCut = true;
+            OnCut?.Invoke(_fruit);
+            _isCut = true;
+        }
     }
 }
