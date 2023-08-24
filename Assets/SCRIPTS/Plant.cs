@@ -4,7 +4,9 @@ using UnityEngine;
 public class Plant : MonoBehaviour
 {
     [SerializeField] private SpawnFruits _spawnFruits;
+
     [SerializeField] private Fruit _currentFruitPlant;
+
     //[SerializeField] private FruitObject _treeClass;
     [SerializeField] private List<Fruit> _fruitObject;
     [SerializeField] private GameObject _spawnPointFruit;
@@ -26,40 +28,43 @@ public class Plant : MonoBehaviour
     public int CurrentIndexFruit => _currentIndexFruit;
     public int CurrentIndexPlant => _currentIndexPlant;
 
-    // Нигде нет реализации улучшения фрукта
+    // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 
     private void Start()
     {
         _spawnTimeWas = _spawnTime;
-        _spawnFruits=gameObject.GetComponentInChildren<SpawnFruits>();
-
+        _spawnFruits = gameObject.GetComponentInChildren<SpawnFruits>();
     }
 
     private void Update()
     {
-        if(_spawnTimeWas <= 0  && _isSpawn == true && _newFruit==null)
+        if (_spawnTimeWas <= 0 && _isSpawn == true && _newFruit == null)
         {
-            _newFruit= _spawnFruits.SpawnFruit(_currentFruitPlant);
-            
-            _fruitMovement= _newFruit.GetComponent<FruitMovement>();
-           
+            _newFruit = _spawnFruits.SpawnFruit(_currentFruitPlant);
+
+            _fruitMovement = _newFruit.GetComponent<FruitMovement>();
+
             _spawnTimeWas = _spawnTime;
         }
         else
         {
-            _spawnTimeWas -= Time.deltaTime;    
+            _spawnTimeWas -= Time.deltaTime;
         }
 
-        if (_fruitMovement.IsCut==true)
+        if(_fruitMovement != null)
         {
-  
-            _newFruit = null;
+            if (_fruitMovement.IsCut == true)
+            {
+                _newFruit = null;
+            }
         }
     }
+
     public void StopSpawn()
     {
         _isSpawn = false;
     }
+
     public void StartSpawn()
     {
         _isSpawn = true;
@@ -70,6 +75,7 @@ public class Plant : MonoBehaviour
         _fruitMovement.SetTargetMovement(basket);
         _fruitMovement.Jump();
     }
+
     public void ModificationFruit(Basket basket)
     {
         if (_currentIndexFruit < _fruitObject.Count)
@@ -92,7 +98,7 @@ public class Plant : MonoBehaviour
     public void ChangeCurrentFruit(int currentFruit)
     {
         _currentIndexFruit = currentFruit;
-        Modification();                                        // Надо ли здесь 
+        Modification(); // пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ 
     }
 
     public void UpSpeed(float newTime)
@@ -101,6 +107,7 @@ public class Plant : MonoBehaviour
         {
             newTime = 0;
         }
+
         _spawnTime -= newTime;
     }
     //public void DeleteFruit()
@@ -118,6 +125,7 @@ public class Plant : MonoBehaviour
         {
             _currentIndexPlant = 0;
         }
+
         foreach (GameObject plantPrefab in _prefabPlant)
         {
             if (plantPrefab == _prefabPlant[_currentIndexPlant])
@@ -135,7 +143,7 @@ public class Plant : MonoBehaviour
     {
         foreach (GameObject plantPrefab in _prefabPlant)
         {
-            if (modelPlant< _emptyModel)
+            if (modelPlant < _emptyModel)
             {
                 if (plantPrefab == _prefabPlant[modelPlant])
                 {
@@ -147,7 +155,7 @@ public class Plant : MonoBehaviour
                 }
             }
         }
-    }   
+    }
 
     public void PlayEffect()
     {

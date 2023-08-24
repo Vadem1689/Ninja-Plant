@@ -7,20 +7,20 @@ public class Grabber : MonoBehaviour
     [SerializeField] private SpawnPlant _spawnPlant;
     [SerializeField] private Merger _merger;
 
-    private bool _isUsingComputer=false;
+    private bool _isUsingComputer = false;
 
     private SpawnPoint _selectedSpawnPoint;
     private BoxCollider _collider;
     private Vector3 _newPosition;
     private RaycastHit _hit;
     private int _countMerge = 0;
-    private bool _isTaken=false;
+    private bool _isTaken = false;
     private Plant _plant;
-    
+
 
     public int CountMerge => _countMerge;
-    public bool IsTaken => _isTaken;    
-    public static Action OnÑallAd;       //Ïîìåíÿòü íàçâàíèå
+    public bool IsTaken => _isTaken;
+    public static Action OnallAd;
 
     private void Start()
     {
@@ -36,11 +36,11 @@ public class Grabber : MonoBehaviour
     {
         if (true)
         {
-            _isUsingComputer=true;
+            _isUsingComputer = true;
         }
         else
         {
-            _isUsingComputer=false; 
+            _isUsingComputer = false;
         }
     }
 
@@ -64,6 +64,7 @@ public class Grabber : MonoBehaviour
                 _merger.TryMerge(_selectedSpawnPoint.Plant, _collider);
             }
         }
+
         if (_selectedSpawnPoint != null)
         {
             if (Input.mousePosition != null)
@@ -87,7 +88,10 @@ public class Grabber : MonoBehaviour
 
     private void MovingSelectedObject()
     {
-        _selectedSpawnPoint.Plant.StopSpawn();
+        if (_selectedSpawnPoint.Plant != null)
+        {
+            _selectedSpawnPoint.Plant.StopSpawn();
+        }
 
         Vector3 position = new Vector3(Input.mousePosition.x, Input.mousePosition.y,
             Camera.main.WorldToScreenPoint(_selectedSpawnPoint.Plant.transform.position).z);
@@ -99,7 +103,7 @@ public class Grabber : MonoBehaviour
         _selectedSpawnPoint.DeletePlant();
         _collider.enabled = false;
 
-        _isTaken =true;
+        _isTaken = true;
     }
 
     private RaycastHit CastRay()
@@ -120,7 +124,7 @@ public class Grabber : MonoBehaviour
 
         return hit;
     }
-   
+
 
     public void PutPlant(SpawnPoint spawnPoint)
     {
@@ -135,5 +139,3 @@ public class Grabber : MonoBehaviour
         _isTaken = false;
     }
 }
-
-
