@@ -28,8 +28,6 @@ public class Plant : MonoBehaviour
     public int CurrentIndexFruit => _currentIndexFruit;
     public int CurrentIndexPlant => _currentIndexPlant;
 
-    // ����� ��� ���������� ��������� ������
-
     private void Start()
     {
         _spawnTimeWas = _spawnTime;

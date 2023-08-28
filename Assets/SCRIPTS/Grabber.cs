@@ -52,14 +52,15 @@ public class Grabber : MonoBehaviour
             {
                 _hit = CastRay();
 
-                if (_hit.collider != null && _hit.collider.TryGetComponent(out SpawnPoint spawnPoint))
+                if (_hit.collider != null && _hit.collider.TryGetComponent(out SpawnPoint spawnPoint) 
+                    && spawnPoint.Plant!= null)
                 {
                     _selectedSpawnPoint = spawnPoint;
                     _collider = _selectedSpawnPoint.Plant.gameObject.GetComponent<BoxCollider>();
                     return;
                 }
             }
-            else
+            else if(_selectedSpawnPoint.Plant != null)
             {
                 _merger.TryMerge(_selectedSpawnPoint.Plant, _collider);
             }
@@ -91,19 +92,22 @@ public class Grabber : MonoBehaviour
         if (_selectedSpawnPoint.Plant != null)
         {
             _selectedSpawnPoint.Plant.StopSpawn();
+
+
+            Vector3 position = new Vector3(Input.mousePosition.x, Input.mousePosition.y,
+           Camera.main.WorldToScreenPoint(_selectedSpawnPoint.Plant.transform.position).z);
+            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(position);
+            _selectedSpawnPoint.Plant.transform.position = new Vector3(worldPosition.x, 3.5f, worldPosition.z);
+            //_selectedObject.TakePlant();
+
+            _plant = _selectedSpawnPoint.Plant;
+            _selectedSpawnPoint.DeletePlant();
+            _collider.enabled = false;
+
+            _isTaken = true;
         }
 
-        Vector3 position = new Vector3(Input.mousePosition.x, Input.mousePosition.y,
-            Camera.main.WorldToScreenPoint(_selectedSpawnPoint.Plant.transform.position).z);
-        Vector3 worldPosition = Camera.main.ScreenToWorldPoint(position);
-        _selectedSpawnPoint.Plant.transform.position = new Vector3(worldPosition.x, 3.5f, worldPosition.z);
-        //_selectedObject.TakePlant();
-
-        _plant = _selectedSpawnPoint.Plant;
-        _selectedSpawnPoint.DeletePlant();
-        _collider.enabled = false;
-
-        _isTaken = true;
+       
     }
 
     private RaycastHit CastRay()
@@ -139,3 +143,5 @@ public class Grabber : MonoBehaviour
         _isTaken = false;
     }
 }
+
+

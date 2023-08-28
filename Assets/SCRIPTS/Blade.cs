@@ -36,7 +36,6 @@ public class Blade : MonoBehaviour
         {
             if (raycastHit.collider.TryGetComponent(out Plant plant))
             {
-                print("задел фрукт");
                 plant.CutFruit(_basket);
             }
         }
